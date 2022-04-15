@@ -55,7 +55,7 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   @Output() rowUnselect: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowSelectAll: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowUnselectAll: EventEmitter<any> = new EventEmitter<any>();
-  @Output() editButtonClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() detailsButtonClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() refreshButtonClicked: EventEmitter<null> = new EventEmitter<null>();
 
   @ViewChild(MatTable) table?: MatTable<any>;
@@ -123,9 +123,9 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   @Input() pageable = true;
 
   @Input() showRefreshButton = true;
-  @Input() showEditButton = true;
+  @Input() showDetailsButton = true;
 
-  @Input() canEdit = false;
+  @Input() canShowDetails = false;
 
   @Input() tableTitle: string = '';
   @Input() filterKeyDelayMs = 500;
@@ -275,20 +275,20 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
     this.rowDblClick.emit(row);
   }
 
-  onEditClicked(event: Event): void {
-    this.editButtonClicked.emit(this.activeRow);
+  onDetailsClicked(event: Event): void {
+    this.detailsButtonClicked.emit(this.activeRow);
   }
 
   onRefreshClicked(event: Event): void {
     this.refreshButtonClicked.emit(null);
   }
 
-  disableEditButtons(): void {
-    this.disableEditButton();
+  disableDetailsButtons(): void {
+    this.disableDetailsButton();
   }
 
-  private disableEditButton(): void {
-    this.canEdit = false;
+  private disableDetailsButton(): void {
+    this.canShowDetails = false;
   }
 
   isEmptyTable(): boolean {

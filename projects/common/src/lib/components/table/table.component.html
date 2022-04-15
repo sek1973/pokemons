@@ -31,12 +31,12 @@
           <span class="material-icons">refresh</span>
         </button>
 
-        <button *ngIf="showEditButton"
+        <button *ngIf="showDetailsButton"
                 mat-icon-button
-                [disabled]="!canEdit"
-                matTooltip="Edit"
-                (click)="onEditClicked($event)">
-          <span class="material-icons">edit</span>
+                [disabled]="!canShowDetails"
+                matTooltip="Details"
+                (click)="onDetailsClicked($event)">
+          <span class="material-icons">more_horiz</span>
         </button>
       </div>
 

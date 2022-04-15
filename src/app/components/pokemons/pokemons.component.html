@@ -1,6 +1,8 @@
 <app-table [data]="data"
            [columnsDefinition]="columnDefinition"
            [showFilter]="true"
+           [canShowDetails]="canShowDetails"
            (refreshButtonClicked)="onRefresh()"
-           (rowDblClick)="onDoubleClick($event)">
+           (rowDblClick)="onDoubleClick($event)"
+           (rowActivated)="onRowActivated($event)">
 </app-table>
