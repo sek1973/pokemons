@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { PokemonDetailsService } from 'src/app/services/pokemon-details.service';
 
 @Component({
@@ -9,10 +10,15 @@ import { PokemonDetailsService } from 'src/app/services/pokemon-details.service'
 })
 export class PokemonDetailsComponent implements OnInit, OnDestroy {
 
+  data!: Object;
+
   private destroyed$: Subject<void> = new Subject<void>();
 
-  constructor(private dataService: PokemonDetailsService) {
-
+  constructor(private route: ActivatedRoute, private dataService: PokemonDetailsService) {
+    const val = this.route.snapshot.params['id' as keyof Params] as number;
+    this.dataService.fetchData(val)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(data => this.data = data);
   }
 
   ngOnInit(): void {
