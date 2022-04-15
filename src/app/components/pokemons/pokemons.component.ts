@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableColumn } from 'projects/common/src/lib/components/table';
 import { take } from 'rxjs';
@@ -9,7 +9,7 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
   templateUrl: './pokemons.component.html',
   styleUrls: ['./pokemons.component.scss']
 })
-export class PokemonsComponent implements OnDestroy {
+export class PokemonsComponent  {
 
   data: any[] = [];
   columnDefinition: TableColumn[] = [
@@ -22,14 +22,10 @@ export class PokemonsComponent implements OnDestroy {
     this.onRefresh();
   }
 
-  ngOnDestroy(): void {
-
-  }
-
   onRefresh(): void {
-    this.dataService.fetchData<{ name: string, url: string }>()
+    this.dataService.fetchAll<{ name: string, url: string }>()
       .pipe(take(1))
-      .subscribe(data => this.data = data.results ?? []);
+      .subscribe(results => this.data = results ?? []);
   }
 
   onDoubleClick(event: any): void {

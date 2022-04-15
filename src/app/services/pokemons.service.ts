@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, debounceTime, EMPTY, expand, Observable, of, scan } from 'rxjs';
 
 export interface CollectionResponse<T> {
   conunt?: number;
   next?: string | null;
   previous?: string | null;
-  results?: T[]
+  results: T[]
 }
 
 @Injectable({
@@ -16,12 +16,20 @@ export class PokemonsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  fetchData<T>(): Observable<CollectionResponse<T>> {
-    return this.httpClient.get<CollectionResponse<T>>('/api/pokemon')
-      .pipe(catchError(err => {
+  fetchData<T>(next?: string): Observable<CollectionResponse<T>> {
+    return this.httpClient.get<CollectionResponse<T>>(next ?? '/api/pokemon')
+      .pipe(
+        catchError(err => {
         console.error('Error catching data:', err);
         return of({ count: 0, next: null, previous: null, results: [] });
       }))
+  }
+
+  fetchAll<T>(): Observable<T[]> {
+    return this.fetchData<T>().pipe(
+      expand(resp => resp.next ? this.fetchData<T>(resp.next) : EMPTY),
+      scan((acc: T[], value: CollectionResponse<T>) => acc.concat(value.results), []),
+      debounceTime(200))
   }
 
 }
