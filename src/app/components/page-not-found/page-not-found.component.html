@@ -1,0 +1,16 @@
+<div class="parent">
+  <div class="container">
+    <h2 class="message">Page not found!</h2>
+    <a mat-raised-button
+       color="primary"
+       [routerLink]="['/']"
+       routerLinkActive="active">
+      Main Page
+    </a>
+    <button mat-raised-button
+            color="accent"
+            (click)="goBack()">
+      Go Back
+    </button>
+  </div>
+</div>
