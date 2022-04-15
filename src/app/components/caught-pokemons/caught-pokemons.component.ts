@@ -6,11 +6,11 @@ import { RowItem } from 'src/app/model/row-item.model';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
-  selector: 'app-pokemons',
-  templateUrl: './pokemons.component.html',
-  styleUrls: ['./pokemons.component.scss']
+  selector: 'app-caught-pokemons',
+  templateUrl: './caught-pokemons.component.html',
+  styleUrls: ['./caught-pokemons.component.scss']
 })
-export class PokemonsComponent  {
+export class CaughtPokemonsComponent {
 
   data: any[] = [];
   columnsDefinition: TableColumn[] = [

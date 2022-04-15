@@ -6,11 +6,11 @@ import { RowItem } from 'src/app/model/row-item.model';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
-  selector: 'app-pokemons',
-  templateUrl: './pokemons.component.html',
-  styleUrls: ['./pokemons.component.scss']
+  selector: 'app-wishlist-pokemons',
+  templateUrl: './wishlist-pokemons.component.html',
+  styleUrls: ['./wishlist-pokemons.component.scss']
 })
-export class PokemonsComponent  {
+export class WishlistPokemonsComponent {
 
   data: any[] = [];
   columnsDefinition: TableColumn[] = [
@@ -50,5 +50,4 @@ export class PokemonsComponent  {
       this.router.navigateByUrl(`pokemon/${id}`);
     }
   }
-
 }
