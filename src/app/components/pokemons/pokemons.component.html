@@ -1,3 +1,5 @@
 <app-table [data]="data"
-           [columnsDefinition]="columnDefinition">
+           [columnsDefinition]="columnDefinition"
+           [showFilter]="true"
+           (refreshButtonClicked)="onRefresh()">
 </app-table>

@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { TableColumn } from 'projects/common/src/lib/components/table';
-import { Subject, takeUntil } from 'rxjs';
+import { take } from 'rxjs';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -16,17 +16,18 @@ export class PokemonsComponent implements OnDestroy {
     { name: 'url', header: 'Url' }
   ]
 
-  private destroyed$: Subject<void> = new Subject<void>();
-
   constructor(private dataService: PokemonsService) {
-    this.dataService.fetchData<{ name: string, url: string }>()
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(data => this.data = data.results ?? []);
+    this.onRefresh();
   }
 
   ngOnDestroy(): void {
-    this.destroyed$.next();
-    this.destroyed$.complete();
+
+  }
+
+  onRefresh(): void {
+    this.dataService.fetchData<{ name: string, url: string }>()
+      .pipe(take(1))
+      .subscribe(data => this.data = data.results ?? []);
   }
 
 }
