@@ -74,7 +74,15 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
     }
   }
 
-  @ViewChild('filterInput', { read: HTMLInputElement }) filterInput!: HTMLInputElement;
+  private _filterInput!: ElementRef;
+  @ViewChild('filterInput') set filterInput(val: ElementRef) {
+    this._filterInput = val;
+    this.subscribeToFilterEvents();
+  }
+  get filterInput(): ElementRef {
+    return this._filterInput;
+  }
+  
   cellTemplates: Map<string, TemplateRef<any>> = new Map<string, TemplateRef<any>>();
   @ContentChildren(TableCellDirective) set dataTableCellDirectives(val: QueryList<TableCellDirective>) {
     this.cellTemplates = new Map<string, TemplateRef<any>>();
@@ -190,22 +198,26 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.initDataSource();
-    });
-    if (this.filterInput) {
-      this.subscription = fromEvent(this.filterInput, 'keyup')
-        .pipe(
-          debounceTime(this.filterKeyDelayMs), // before emitting last event
-          distinctUntilChanged()
-        )
-        .subscribe({
-          next: () => this.applyFilter(this.filterInput.value)
-        });
-    }
+    });    
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.loadingSubscription.unsubscribe();
+  }
+
+  private subscribeToFilterEvents(): void {
+    this.subscription.unsubscribe();
+    if (this.filterInput) {
+      this.subscription = fromEvent(this.filterInput.nativeElement, 'keyup')
+        .pipe(
+          debounceTime(this.filterKeyDelayMs), // before emitting last event
+          distinctUntilChanged()
+        )
+        .subscribe({
+          next: () => this.applyFilter(this.filterInput.nativeElement?.value)
+        });
+    }
   }
 
   getCellTemplate(column: string, defaultTemplate: TemplateRef<any>): TemplateRef<any> {

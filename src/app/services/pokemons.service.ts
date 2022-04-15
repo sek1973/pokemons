@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, debounceTime, EMPTY, expand, Observable, of, scan } from 'rxjs';
+import { catchError, EMPTY, expand, Observable, of, reduce } from 'rxjs';
 
 export interface CollectionResponse<T> {
   conunt?: number;
@@ -28,8 +28,7 @@ export class PokemonsService {
   fetchAll<T>(): Observable<T[]> {
     return this.fetchData<T>().pipe(
       expand(resp => resp.next ? this.fetchData<T>(resp.next) : EMPTY),
-      scan((acc: T[], value: CollectionResponse<T>) => acc.concat(value.results), []),
-      debounceTime(200))
+      reduce((acc: T[], value: CollectionResponse<T>) => acc.concat(value.results), []))
   }
 
 }
