@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TableColumn } from 'projects/common/src/lib/components/table';
 import { take } from 'rxjs';
@@ -25,7 +26,8 @@ export class PokemonsComponent {
   }
 
   constructor(private dataService: PokemonsService,
-    private router: Router) {
+    private router: Router,
+    private snackBar: MatSnackBar) {
     this.onRefresh();
   }
 
@@ -76,12 +78,14 @@ export class PokemonsComponent {
   addToCaught(): void {
     if (this.activeRow) {
       this.dataService.addToCaught(this.activeRow);
+      this.snackBar.open(`Pokemon ${this.activeRow.name} added to caught`, 'Hide', { duration: 3000 });
     }
   }
 
   addToWishList(): void {
     if (this.activeRow) {
       this.dataService.addToWishlist(this.activeRow);
+      this.snackBar.open(`Pokemon ${this.activeRow.name} added to wish list`, 'Hide', { duration: 3000 });
     }
   }
 

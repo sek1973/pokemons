@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { PokemonsService } from 'src/app/services/pokemons.service';
@@ -13,6 +14,11 @@ class PokemonServiceMock {
   }
 }
 
+class MatSnackBarMock {
+  open() { }
+}
+
+
 describe('PokemonsComponent', () => {
   let component: PokemonsComponent;
   let fixture: ComponentFixture<PokemonsComponent>;
@@ -22,7 +28,8 @@ describe('PokemonsComponent', () => {
       declarations: [PokemonsComponent],
       providers: [
         { provide: Router, useClass: RouterMock },
-        { provide: PokemonsService, useClass: PokemonServiceMock }
+        { provide: PokemonsService, useClass: PokemonServiceMock },
+        { provide: MatSnackBar, useClass: MatSnackBarMock }
       ]
     })
       .compileComponents();
