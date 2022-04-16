@@ -1,8 +1,39 @@
 <app-table [data]="data"
            [columnsDefinition]="columnDefinition"
            [showFilter]="true"
-           [canShowDetails]="canShowDetails"
-           (refreshButtonClicked)="onRefresh()"
            (rowDblClick)="onDoubleClick($event)"
            (rowActivated)="onRowActivated($event)">
+
+  <ng-template #tableToolbarTemplate>
+    <div class="buttons-panel">
+      <div class="buttons-visible">
+        <button mat-icon-button
+                matTooltip="Refresh"
+                (click)="onRefresh()">
+          <span class="material-icons">refresh</span>
+        </button>
+
+        <button mat-icon-button
+                [disabled]="!isAciveRowPresent"
+                matTooltip="Details"
+                (click)="onShowDetails()">
+          <span class="material-icons">more_horiz</span>
+        </button>
+
+        <button mat-icon-button
+                [disabled]="!isAciveRowPresent"
+                matTooltip="Won Pokemon"
+                (click)="addToCaught()">
+          <span class="material-icons">done</span>
+        </button>
+
+        <button mat-icon-button
+                [disabled]="!isAciveRowPresent"
+                matTooltip="Wishlist Pokemon"
+                (click)="addToWishList()">
+          <span class="material-icons">grade</span>
+        </button>
+      </div>
+    </div>
+  </ng-template>
 </app-table>

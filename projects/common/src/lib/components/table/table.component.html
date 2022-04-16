@@ -4,15 +4,10 @@
   {{row[column]}}
 </ng-template>
 
-<ng-template #defaultTitleTemplate>
-  <span class="table-title">{{tableTitle}}</span>
-</ng-template>
-
 <div class="component-container">
   <div class="table-header-row"
        *ngIf="!hideHeader">
-    <ng-container [ngTemplateOutlet]="getTableTitleTemplate(defaultTitleTemplate)">
-    </ng-container>
+    <span class="table-title">{{tableTitle}}</span>
 
     <mat-form-field class="filter-field"
                     *ngIf="showFilter">
@@ -22,25 +17,9 @@
              placeholder="Filter">
     </mat-form-field>
 
-    <div class="buttons-panel">
-      <div class="table-buttons-visible">
-        <button *ngIf="showRefreshButton"
-                mat-icon-button
-                matTooltip="Refresh"
-                (click)="onRefreshClicked($event)">
-          <span class="material-icons">refresh</span>
-        </button>
+    <ng-container [ngTemplateOutlet]="tableToolbarTemplate ?? null">
+    </ng-container>
 
-        <button *ngIf="showDetailsButton"
-                mat-icon-button
-                [disabled]="!canShowDetails"
-                matTooltip="Details"
-                (click)="onDetailsClicked($event)">
-          <span class="material-icons">more_horiz</span>
-        </button>
-      </div>
-
-    </div>
   </div>
 
   <div class="table-container">
@@ -125,4 +104,5 @@
                  [pageSizeOptions]="[5, 10, 20, 50]"
                  [pageSize]="10">
   </mat-paginator>
+
 </div>

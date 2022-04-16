@@ -1,4 +1,4 @@
-$active-row-background: rgba(lightgray, 0.2);
+$active-row-background: rgba(blue, 0.2);
 $even-row-background: rgba(lightgray, 0.1);
 $odd-row-background: white;
 $hover-row-background: rgba(lightgray, 0.5);
@@ -25,35 +25,6 @@ table.mat-table {
   flex-grow: 1;
   max-width: 40%;
   color: darkgray;
-}
-
-.buttons-panel {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  color: rgba(black, 0.8);
-}
-
-button.mat-icon-button {
-  width: 48px;
-  height: 18px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: 2px;
-  margin-right: 2px;
-}
-
-span.material-icons {
-  font-size: 24px;
-}
-
-.menu-icon {
-  padding-right: 5px;
 }
 
 tr.mat-header-row {
@@ -225,10 +196,6 @@ tr.row-row {
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 50px;
-  padding-top: 16px;
-  padding-left: 16px;
-  padding-right: 8px;
-  padding-bottom: 8px;
   background-color: white;
   width: 100%;
 }
@@ -243,28 +210,5 @@ tr.row-row {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.menu-button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.menu-button-visible {
-  @media(min-width: 640px) {
-    display: none;
-  }
-}
-
-.table-buttons-visible {
-  align-items: center;
-
-  @media(min-width: 640px) {
-    display: flex;
-  }
-
-  @media(max-width: 639px) {
-    display: none;
-  }
+  padding: 15px;
 }

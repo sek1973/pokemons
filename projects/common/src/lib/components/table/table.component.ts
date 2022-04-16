@@ -55,8 +55,6 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   @Output() rowUnselect: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowSelectAll: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowUnselectAll: EventEmitter<any> = new EventEmitter<any>();
-  @Output() detailsButtonClicked: EventEmitter<any> = new EventEmitter<any>();
-  @Output() refreshButtonClicked: EventEmitter<null> = new EventEmitter<null>();
 
   @ViewChild(MatTable) table?: MatTable<any>;
   @ViewChild('table', { read: ElementRef }) tableElementRef?: ElementRef;
@@ -82,7 +80,7 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   get filterInput(): ElementRef {
     return this._filterInput;
   }
-  
+
   cellTemplates: Map<string, TemplateRef<any>> = new Map<string, TemplateRef<any>>();
   @ContentChildren(TableCellDirective) set dataTableCellDirectives(val: QueryList<TableCellDirective>) {
     this.cellTemplates = new Map<string, TemplateRef<any>>();
@@ -91,10 +89,8 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
     }
   }
 
-  @ContentChild('tableTitleTemplate') tableTitleTemplate?: TemplateRef<Component>;
+  @ContentChild('tableToolbarTemplate') tableToolbarTemplate?: TemplateRef<Component>;
   @ContentChild('expandedRowTemplate') expandedRowTemplate?: TemplateRef<Component>;
-  @ContentChild('middleToolbarPanelTemplate') middleToolbarPanelTemplate?: TemplateRef<Component>;
-  @ContentChild('rightToolbarPanelTemplate') rightToolbarPanelTemplate?: TemplateRef<Component>;
 
   @Input() sortActive: string = '';
   @Input() sortDirection: SortDirection = '';
@@ -121,11 +117,6 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   @Input() showFilter = false;
   @Input() sortable = true;
   @Input() pageable = true;
-
-  @Input() showRefreshButton = true;
-  @Input() showDetailsButton = true;
-
-  @Input() canShowDetails = false;
 
   @Input() tableTitle: string = '';
   @Input() filterKeyDelayMs = 500;
@@ -198,7 +189,7 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.initDataSource();
-    });    
+    });
   }
 
   ngOnDestroy(): void {
@@ -222,15 +213,6 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
 
   getCellTemplate(column: string, defaultTemplate: TemplateRef<any>): TemplateRef<any> {
     const template = this.cellTemplates.get(column);
-    if (template) {
-      return template;
-    } else {
-      return defaultTemplate;
-    }
-  }
-
-  getTableTitleTemplate(defaultTemplate: TemplateRef<any>): TemplateRef<any> {
-    const template = this.tableTitleTemplate;
     if (template) {
       return template;
     } else {
@@ -273,22 +255,6 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
 
   onRowDblClick(row: T): void {
     this.rowDblClick.emit(row);
-  }
-
-  onDetailsClicked(event: Event): void {
-    this.detailsButtonClicked.emit(this.activeRow);
-  }
-
-  onRefreshClicked(event: Event): void {
-    this.refreshButtonClicked.emit(null);
-  }
-
-  disableDetailsButtons(): void {
-    this.disableDetailsButton();
-  }
-
-  private disableDetailsButton(): void {
-    this.canShowDetails = false;
   }
 
   isEmptyTable(): boolean {

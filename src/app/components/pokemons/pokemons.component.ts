@@ -14,7 +14,7 @@ interface RowItem {
   templateUrl: './pokemons.component.html',
   styleUrls: ['./pokemons.component.scss']
 })
-export class PokemonsComponent  {
+export class PokemonsComponent {
 
   data: any[] = [];
   columnDefinition: TableColumn[] = [
@@ -23,7 +23,7 @@ export class PokemonsComponent  {
   ]
   activeRow?: RowItem;
 
-  get canShowDetails(): boolean {
+  get isAciveRowPresent(): boolean {
     return this.activeRow ? true : false;
   }
 
@@ -47,11 +47,27 @@ export class PokemonsComponent  {
     this.activeRow = row;
   }
 
-  private showDetails(row: RowItem): void {
+  private showDetails(row?: RowItem): void {
     if (row && row.url) {
       const segments: string[] = (row.url as string).split('/');
       const id = segments[segments.length - 2];
       this.router.navigateByUrl(`pokemon/${id}`);
+    }
+  }
+
+  onShowDetails(): void {
+    this.showDetails(this.activeRow);
+  }
+
+  addToCaught(): void {
+    if (this.activeRow) {
+
+    }
+  }
+
+  addToWishList(): void {
+    if (this.activeRow) {
+
     }
   }
 
