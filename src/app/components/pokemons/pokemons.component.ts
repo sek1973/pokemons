@@ -57,13 +57,13 @@ export class PokemonsComponent {
 
   addToCaught(): void {
     if (this.activeRow) {
-
+      this.dataService.addToCaught(this.activeRow);
     }
   }
 
   addToWishList(): void {
     if (this.activeRow) {
-
+      this.dataService.addToWishlist(this.activeRow);
     }
   }
 

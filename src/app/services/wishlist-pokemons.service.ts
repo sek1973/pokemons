@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RowItem } from '../model/row-item.model';
+import { getLocalStorageItem, setLocalStorageItem } from '../tools/local-storage';
 
 const wishlistPokemonsKey = 'wishlist.pokemons';
 
@@ -30,9 +31,11 @@ export class WishlistPokemonsService {
 
   addItem(item: RowItem): void {
     this.items.set(item.url, item.name);
+    this._saveData();
   }
 
   removeItem(item: RowItem): void {
     this.items.delete(item.url);
+    this._saveData();
   }
 }
