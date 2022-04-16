@@ -114,13 +114,14 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
     return this._data;
   }
 
-  @Input() showFilter = false;
-  @Input() sortable = true;
-  @Input() pageable = true;
+  @Input() showFilter: boolean = false;
+  @Input() sortable: boolean = true;
+  @Input() pageable: boolean = true;
 
   @Input() tableTitle: string = '';
-  @Input() filterKeyDelayMs = 500;
-  @Input() hideHeader = false;
+  @Input() filterKeyDelayMs: number = 500;
+  @Input() hideHeader: boolean = false;
+  @Input() loading: boolean = false;
 
   @Input() disableExpand: (dataRow: any) => boolean = () => false;
 

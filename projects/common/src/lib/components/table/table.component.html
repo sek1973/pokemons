@@ -19,8 +19,11 @@
 
     <ng-container [ngTemplateOutlet]="tableToolbarTemplate ?? null">
     </ng-container>
-
   </div>
+
+  <mat-progress-bar *ngIf="loading"
+                    mode='indeterminate'>
+  </mat-progress-bar>
 
   <div class="table-container">
     <table *ngIf="dataSource"

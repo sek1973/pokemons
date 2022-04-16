@@ -18,6 +18,7 @@ export class PokemonsComponent {
     { name: 'name', header: 'Name' }
   ]
   activeRow?: RowItem;
+  loading: boolean = false;
 
   get isAciveRowPresent(): boolean {
     return this.activeRow ? true : false;
@@ -29,9 +30,13 @@ export class PokemonsComponent {
   }
 
   onRefresh(): void {
+    this.loading = true;
     this.dataService.fetchAll<{ name: string, url: string }>()
       .pipe(take(1))
-      .subscribe(results => this.data = this.mapData(results));
+      .subscribe(results => {
+        this.data = this.mapData(results);
+        this.loading = false;
+      });
     this.activeRow = undefined;
   }
 

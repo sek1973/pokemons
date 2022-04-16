@@ -1,5 +1,4 @@
 <div class="navigation">
-
   <a [routerLink]="['/caught']"
      routerLinkActive="active">
     Caught Pokemons
@@ -9,12 +8,13 @@
      routerLinkActive="active">
     Wish List Pokemons
   </a>
-
 </div>
 
 <app-table [data]="data"
            [columnsDefinition]="columnsDefinition"
            [showFilter]="true"
+           [loading]="loading"
+           tableTitle="Pokemons list"
            (rowDblClick)="onDoubleClick($event)"
            (rowActivated)="onRowActivated($event)">
 
