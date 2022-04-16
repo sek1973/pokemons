@@ -6,11 +6,11 @@ import { RowItem } from 'src/app/model/row-item.model';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
-  selector: 'app-pokemons',
-  templateUrl: './pokemons.component.html',
-  styleUrls: ['./pokemons.component.scss']
+  selector: 'app-caught-pokemons',
+  templateUrl: './caught-pokemons.component.html',
+  styleUrls: ['./caught-pokemons.component.scss']
 })
-export class PokemonsComponent {
+export class CaughtPokemonsComponent {
 
   data: any[] = [];
   columnsDefinition: TableColumn[] = [
@@ -19,7 +19,7 @@ export class PokemonsComponent {
   ]
   activeRow?: RowItem;
 
-  get isAciveRowPresent(): boolean {
+  get canShowDetails(): boolean {
     return this.activeRow ? true : false;
   }
 
@@ -43,27 +43,11 @@ export class PokemonsComponent {
     this.activeRow = row;
   }
 
-  private showDetails(row?: RowItem): void {
+  private showDetails(row: RowItem): void {
     if (row && row.url) {
       const segments: string[] = (row.url as string).split('/');
       const id = segments[segments.length - 2];
       this.router.navigateByUrl(`pokemon/${id}`);
-    }
-  }
-
-  onShowDetails(): void {
-    this.showDetails(this.activeRow);
-  }
-
-  addToCaught(): void {
-    if (this.activeRow) {
-
-    }
-  }
-
-  addToWishList(): void {
-    if (this.activeRow) {
-
     }
   }
 
