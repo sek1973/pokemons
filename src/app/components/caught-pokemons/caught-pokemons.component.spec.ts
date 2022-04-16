@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Router } from '@angular/router';
 import { CaughtPokemonsComponent } from './caught-pokemons.component';
+
+class RouterMock {
+  navigateByUrl(url: string) { };
+}
 
 describe('CaughtPokemonsComponent', () => {
   let component: CaughtPokemonsComponent;
@@ -8,9 +12,10 @@ describe('CaughtPokemonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CaughtPokemonsComponent ]
+      declarations: [CaughtPokemonsComponent],
+      providers: [{ provide: Router, useClass: RouterMock }]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
