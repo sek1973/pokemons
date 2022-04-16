@@ -14,8 +14,8 @@ export class PokemonsComponent {
 
   data: any[] = [];
   columnsDefinition: TableColumn[] = [
-    { name: 'name', header: 'Name' },
-    { name: 'url', header: 'Url' }
+    { name: 'url', header: 'Url' },
+    { name: 'name', header: 'Name' }
   ]
   activeRow?: RowItem;
 
@@ -31,8 +31,23 @@ export class PokemonsComponent {
   onRefresh(): void {
     this.dataService.fetchAll<{ name: string, url: string }>()
       .pipe(take(1))
-      .subscribe(results => this.data = results ?? []);
+      .subscribe(results => this.data = this.mapData(results));
     this.activeRow = undefined;
+  }
+
+  private mapData(data?: RowItem[]): RowItem[] {
+    if (!data?.length) {
+      return [];
+    }
+    const result: RowItem[] = data.map(
+      item => {
+        const segments: string[] = (item.url as string).split('/');
+        const id = +segments[segments.length - 2];
+        item.id = id;
+        return item;
+      }
+    )
+    return result;
   }
 
   onDoubleClick(row: RowItem): void {
@@ -44,10 +59,8 @@ export class PokemonsComponent {
   }
 
   private showDetails(row?: RowItem): void {
-    if (row && row.url) {
-      const segments: string[] = (row.url as string).split('/');
-      const id = segments[segments.length - 2];
-      this.router.navigateByUrl(`pokemon/${id}`);
+    if (row && row.id) {
+      this.router.navigateByUrl(`pokemon/${row.id}`);
     }
   }
 

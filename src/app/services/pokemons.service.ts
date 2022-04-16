@@ -28,7 +28,7 @@ export class PokemonsService {
         catchError(err => {
           console.error('Error catching data:', err);
           return of({ count: 0, next: null, previous: null, results: [] });
-        }))
+        }));
   }
 
   fetchAll<T>(): Observable<T[]> {

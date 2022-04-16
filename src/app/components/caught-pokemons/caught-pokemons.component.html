@@ -1,8 +1,21 @@
+<a [routerLink]="['/']"
+   routerLinkActive="active">
+  Home
+</a>
+
 <app-table [data]="data"
            [columnsDefinition]="columnsDefinition"
            [showFilter]="true"
            (rowDblClick)="onDoubleClick($event)"
            (rowActivated)="onRowActivated($event)">
+
+  <ng-template cellTemplateForColumn="url"
+               let-row="row">
+    <a [routerLink]="['/pokemon', row.id]"
+       routerLinkActive="active">
+      {{row.id}}
+    </a>
+  </ng-template>
 
   <ng-template #tableToolbarTemplate>
     <div class="buttons-panel">

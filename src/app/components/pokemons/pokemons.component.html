@@ -1,8 +1,30 @@
+<div class="navigation">
+
+  <a [routerLink]="['/caught']"
+     routerLinkActive="active">
+    Caught Pokemons
+  </a>
+
+  <a [routerLink]="['/wishlist']"
+     routerLinkActive="active">
+    Wish List Pokemons
+  </a>
+
+</div>
+
 <app-table [data]="data"
            [columnsDefinition]="columnsDefinition"
            [showFilter]="true"
            (rowDblClick)="onDoubleClick($event)"
            (rowActivated)="onRowActivated($event)">
+
+  <ng-template cellTemplateForColumn="url"
+               let-row="row">
+    <a [routerLink]="['/pokemon', row.id]"
+       routerLinkActive="active">
+      {{row.id}}
+    </a>
+  </ng-template>
 
   <ng-template #tableToolbarTemplate>
     <div class="buttons-panel">

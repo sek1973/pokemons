@@ -13,8 +13,8 @@ export class WishlistPokemonsComponent {
 
   data: any[] = [];
   columnsDefinition: TableColumn[] = [
-    { name: 'name', header: 'Name' },
-    { name: 'url', header: 'Url' }
+    { name: 'url', header: 'Url' },
+    { name: 'name', header: 'Name' }
   ]
   activeRow?: RowItem;
 
@@ -41,10 +41,8 @@ export class WishlistPokemonsComponent {
   }
 
   private showDetails(row?: RowItem): void {
-    if (row && row.url) {
-      const segments: string[] = (row.url as string).split('/');
-      const id = segments[segments.length - 2];
-      this.router.navigateByUrl(`pokemon/${id}`);
+    if (row && row.id) {
+      this.router.navigateByUrl(`pokemon/${row.id}`);
     }
   }
 
@@ -54,7 +52,8 @@ export class WishlistPokemonsComponent {
 
   remove(): void {
     if (this.activeRow) {
-      this.dataService.removeItem(this.activeRow)
+      this.dataService.removeItem(this.activeRow);
+      this.onRefresh();
     }
   }
 

@@ -9,28 +9,29 @@ const wishlistPokemonsKey = 'wishlist.pokemons';
 })
 export class WishlistPokemonsService {
 
-  private items: Map<string, string> = new Map<string, string>();
+  private items: Map<string, RowItem> = new Map<string, RowItem>();
 
   constructor() { }
 
   getData(): RowItem[] {
     const items = getLocalStorageItem<RowItem[]>(wishlistPokemonsKey) ?? [];
-    items.forEach(i => this.items.set(i.url, i.name));
-    return Array.from(this.items, ([name, url]) => ({ name, url }));
+    this.items.clear();
+    items.forEach(i => this.items.set(i.url, i));
+    return Array.from(this.items, ([key, value]) => ({ ...value }));
   }
 
   saveData(items: RowItem[]): void {
     this.items.clear();
-    items.forEach(i => this.items.set(i.url, i.name));
+    items.forEach(i => this.items.set(i.url, i));
     this._saveData();
   }
 
   private _saveData(): void {
-    setLocalStorageItem<RowItem[]>(wishlistPokemonsKey, Array.from(this.items, ([name, url]) => ({ name, url })));
+    setLocalStorageItem<RowItem[]>(wishlistPokemonsKey, Array.from(this.items, ([key, value]) => ({ ...value })));
   }
 
   addItem(item: RowItem): void {
-    this.items.set(item.url, item.name);
+    this.items.set(item.url, item);
     this._saveData();
   }
 
