@@ -32,7 +32,6 @@ describe('TableCellDirective', () => {
       fixture.detectChanges();
       const component = fixture.componentInstance;
       const directive = component.dataTableCellDirective;
-      console.log(directive);
       expect(directive).not.toBeNull();
       expect(directive?.templateRef).not.toBeNull();
       expect(directive?.cellTemplateForColumn).toBe('test');

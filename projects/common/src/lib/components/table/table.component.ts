@@ -95,8 +95,8 @@ export class TableComponent<T extends { [key: string]: any }> implements OnInit,
   @Input() sortActive: string = '';
   @Input() sortDirection: SortDirection = '';
 
-  private _dataSource?: TableDataSource<T>;
-  get dataSource(): TableDataSource<T> | undefined {
+  private _dataSource: TableDataSource<T> = new TableDataSource();
+  get dataSource(): TableDataSource<T> {
     return this._dataSource;
   }
 
