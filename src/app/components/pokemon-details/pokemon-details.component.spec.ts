@@ -13,6 +13,7 @@ class ActivateRouteMock {
 
 class PokemonDetailsServiceMock {
   fetchData(id: number) { return of({}); }
+  fetchDataForTree(id: number) { return of([]); }
 }
 
 describe('PokemonDetailsComponent', () => {
